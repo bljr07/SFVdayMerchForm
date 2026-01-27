@@ -77,7 +77,7 @@ const handleRemoveItem = (index) => {
 
       <section id="bouquets" v-if="bouquets.length > 0">
         <h3 class="mb-3 text-primary border-bottom pb-2">💐 Bouquets</h3>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in bouquets" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
           </div>
@@ -86,7 +86,7 @@ const handleRemoveItem = (index) => {
 
       <section id="flowers" v-if="flowers.length > 0">
         <h3 class="mb-3 text-danger border-bottom pb-2">🌹 Single Flowers</h3>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in flowers" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
           </div>
@@ -95,7 +95,7 @@ const handleRemoveItem = (index) => {
 
       <section id="keychains" v-if="keychains.length > 0">
         <h3 class="mb-3 text-success border-bottom pb-2">🎵 CD Key Chains</h3>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-12 col-lg-6 mb-4" v-for="product in keychains" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
           </div>
@@ -104,7 +104,7 @@ const handleRemoveItem = (index) => {
 
       <section id="cards" v-if="cardHolders.length > 0">
         <h3 class="mb-3 text-info border-bottom pb-2">💳 Card Holders</h3>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in cardHolders" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
           </div>
@@ -113,7 +113,7 @@ const handleRemoveItem = (index) => {
 
       <section id="services" v-if="services.length > 0">
         <h3 class="mb-3 text-secondary border-bottom pb-2">🎁 Services</h3>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in services" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
           </div>
