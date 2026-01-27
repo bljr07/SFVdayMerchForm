@@ -155,8 +155,18 @@ const submitOrder = async () => {
                      <span v-else class="fst-italic">{{ val }}</span>
                    </div>
                  </div>
-                 <span class="fw-bold">${{ item.price * item.quantity }}</span>
-                 <button class="btn btn-sm btn-outline-danger ms-2 border-0" @click="$emit('remove-item', index)">×</button>
+                 <div class="d-flex flex-column align-items-end">
+                  <span class="fw-bold fs-5 mb-2">${{ item.price * item.quantity }}</span>
+
+                  <!-- Quantity Controls -->
+                  <div class="d-flex align-items-center gap-2 bg-light rounded p-1 mb-2">
+                    <button class="btn btn-sm btn-white border px-2 py-0 fw-bold" @click="$emit('update-quantity', index, -1)" :disabled="item.quantity <= 1">−</button>
+                    <span class="fw-bold px-1" style="min-width: 1.5ch; text-align: center">{{ item.quantity }}</span>
+                    <button class="btn btn-sm btn-white border px-2 py-0 fw-bold" @click="$emit('update-quantity', index, 1)">+</button>
+                  </div>
+                  
+                  <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" style="font-size: 0.85rem" @click="$emit('remove-item', index)">Remove</button>
+                 </div>
                </div>
             </li>
           </ul>
