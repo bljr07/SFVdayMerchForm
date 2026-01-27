@@ -230,11 +230,23 @@ const addToCart = () => {
       </div>
 
       <div v-if="product.name === 'CD Key Chain'" class="bg-light p-3 rounded mb-3">
-        <p class="small text-muted mb-2">Upload your 3 images & details:</p>
+        <label class="form-label small fw-bold">1. Select Background Color</label>
+        <select v-model="form.bg_color" class="form-select form-select-sm mb-2">
+          <option value="White">White</option>
+          <option value="Black">Black</option>
+          <option value="Beige">Beige</option>
+          <option value="Red">Red</option>
+        </select>
+
+        <label class="form-label small fw-bold">2. Upload image (Front Cover)</label>
         <input type="file" class="form-control form-control-sm mb-2" @change="uploadImage($event, 'cover_img')" accept="image/*" />
+        <label class="form-label small fw-bold">3. Upload image (Inside Keychain)</label>
         <input type="file" class="form-control form-control-sm mb-2" @change="uploadImage($event, 'pic1_img')" accept="image/*" />
+        <label class="form-label small fw-bold">4. Upload image (Back Cover)</label>
         <input type="file" class="form-control form-control-sm mb-2" @change="uploadImage($event, 'pic2_img')" accept="image/*" />
+        <label class="form-label small fw-bold">5. Other details</label>
         <input v-model="form.album_name" class="form-control form-control-sm mb-2" placeholder="Album Name" />
+        <input v-model="form.artist" class="form-control form-control-sm mb-2" placeholder="Artist Name" />
         <textarea v-model="form.caption" class="form-control form-control-sm" placeholder="Caption (Max 50 characters)" maxlength="50"></textarea>
       </div>
 

@@ -149,8 +149,8 @@ const submitOrder = async () => {
                    <strong class="d-block mb-1">{{ item.name }}</strong>
                    <div v-for="(val, k) in item.options" :key="k" class="text-muted small mb-1">
                      <span class="fst-italic text-dark">{{ formatKey(k) }}: </span> 
-                     <span v-if="String(val).startsWith('http')" class="d-block mt-1">
-                        <a :href="val" target="_blank" class="text-decoration-underline">View Image</a>
+                     <span v-if="String(val).startsWith('http')" class="fst-italic">
+                        <a :href="val" target="_blank" class="text-decoration-underline">View</a>
                      </span>
                      <span v-else class="fst-italic">{{ val }}</span>
                    </div>
