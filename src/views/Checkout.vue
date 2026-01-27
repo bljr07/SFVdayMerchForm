@@ -61,6 +61,24 @@ const uploadProof = async (event) => {
   }
 }
 
+// Helper to format option keys nicely
+const formatKey = (key) => {
+  const overrides = {
+    'bg': 'Background Color',
+    'album': 'Album Name',
+    'artist': 'Artist',
+    'caption': 'Caption',
+    'cover': 'Cover Image',
+    'pic1': 'Picture 1',
+    'pic2': 'Picture 2',
+    'tele': 'Telegram/Phone'
+  }
+  if (overrides[key]) return overrides[key]
+  
+  // Convert snake_case to Title Case (e.g. flower_type -> Flower Type)
+  return key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+}
+
 // --- Submit Order ---
 const submitOrder = async () => {
   if (props.cart.length === 0) return alert('Your cart is empty!')
@@ -126,16 +144,21 @@ const submitOrder = async () => {
           <div class="card-header bg-white fw-bold">Your Order</div>
           <ul class="list-group list-group-flush">
             <li v-for="(item, index) in cart" :key="index" class="list-group-item">
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between align-items-start">
                  <div>
-                   <strong>{{ item.name }}</strong>
-                   <small class="d-block text-muted" v-for="(val, k) in item.options" :key="k">
-                     {{ k }}: {{ val }}
-                   </small>
+                   <strong class="d-block mb-1">{{ item.name }}</strong>
+                   <div v-for="(val, k) in item.options" :key="k" class="text-muted small mb-1">
+                     <span class="fst-italic text-dark">{{ formatKey(k) }}: </span> 
+                     <span v-if="String(val).startsWith('http')" class="d-block mt-1">
+                        <a :href="val" target="_blank" class="text-decoration-underline">View Image</a>
+                     </span>
+                     <span v-else class="fst-italic">{{ val }}</span>
+                   </div>
                  </div>
-                 <span>${{ item.price * item.quantity }}</span>
+                 <span class="fw-bold">${{ item.price * item.quantity }}</span>
+                 <button class="btn btn-sm btn-outline-danger ms-2 border-0" @click="$emit('remove-item', index)">×</button>
                </div>
-               </li>
+            </li>
           </ul>
           <div class="card-footer d-flex justify-content-between fw-bold fs-5">
             <span>Total to Pay:</span>
