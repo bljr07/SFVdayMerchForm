@@ -264,7 +264,7 @@ const submitOrder = async () => {
 
           <div class="text-center mb-3 p-3 bg-light rounded border">
             <p class="mb-2 fw-bold">Scan to Pay via PayNow</p>
-            <img src="../../public/paynow.png" alt="PayNow QR" class="img-fluid mb-2" style="max-width: 200px;">
+            <img src="/paynow.jpg" alt="PayNow QR" class="img-fluid mb-2" style="max-width: 200px;">
             <p class="mb-0 text-muted small">Paynow to Janell</p>
           </div>
 
