@@ -36,7 +36,7 @@ const form = reactive({
   bouquet_colors: [], // <--- CHANGED: Array to store multiple colors
   wrapping: '',
   // Card Holder
-  character: '',
+  variation: '',
   // Flowers
   single_flower_color: ''
 })
@@ -112,7 +112,7 @@ const addToCart = () => {
     if (!form.single_flower_color) errorMessage = 'Please select a Color.'
 
   } else if (props.product.name === 'Card Holder') {
-    if (!form.character) errorMessage = 'Please select a Variation.'
+    if (!form.variation) errorMessage = 'Please select a Variation.'
 
   } else if (props.product.name === 'Wrapping Service') {
     if (!form.wrapping) errorMessage = 'Please select a Paper Style.'
@@ -156,7 +156,7 @@ const addToCart = () => {
   } else if (props.product.category === 'Flowers') {
     finalOptions = { color: form.single_flower_color || 'Standard' }
   } else if (props.product.name === 'Card Holder') {
-    finalOptions = { character: form.character }
+    finalOptions = { variation: form.variation }
   } else if (props.product.name === 'Wrapping Service') {
     finalOptions = { style: form.wrapping }
   }
@@ -179,7 +179,7 @@ const addToCart = () => {
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-start mb-2">
         <h5 class="card-title fw-bold">{{ product.name }}</h5>
-        <span class="badge bg-primary rounded-pill">${{ product.price }}</span>
+        <span class="badge bg-dark-pink text-dark rounded-pill">${{ product.price }}</span>
       </div>
       <p class="card-text text-muted small mb-3">{{ product.description }}</p>
 
@@ -215,7 +215,7 @@ const addToCart = () => {
         </select>
       </div>
 
-      <div v-if="product.category === 'Flowers'" class="mb-3">
+      <div v-if="product.category === 'Flowers'" class="bg-light p-3 rounded mb-3">
         <label class="form-label small fw-bold">Select Color</label>
         <select v-model="form.single_flower_color" class="form-select form-select-sm">
           <option value="" disabled>Select Color...</option>
@@ -234,10 +234,10 @@ const addToCart = () => {
         </select>
       </div>
 
-      <div v-if="product.name === 'Card Holder'" class="mb-3">
+      <div v-if="product.name === 'Card Holder'" class="bg-light p-3 rounded mb-3">
         <label class="form-label small fw-bold">Select Variation</label>
-        <select v-model="form.character" class="form-select form-select-sm">
-          <option value="" disabled>Select Character...</option>
+        <select v-model="form.variation" class="form-select form-select-sm">
+          <option value="" disabled>Select Variation...</option>
           <option>Duck</option>
           <option>Dinosaur</option>
           <option>Capybara</option>
@@ -245,7 +245,7 @@ const addToCart = () => {
         </select>
       </div>
 
-      <div v-if="product.name === 'Wrapping Service'" class="mb-3">
+      <div v-if="product.name === 'Wrapping Service'" class="bg-light p-3 rounded mb-3">
         <label class="form-label small fw-bold">Select Wrapping</label>
         <select v-model="form.wrapping" class="form-select form-select-sm">
           <option value="" disabled>Select Paper...</option>
@@ -280,7 +280,7 @@ const addToCart = () => {
           maxlength="50"></textarea>
       </div>
 
-      <button class="btn btn-dark w-100" @click="addToCart" :disabled="isUploading">
+      <button class="btn bg-dark-pink border-dark w-100" @click="addToCart" :disabled="isUploading">
         {{ isUploading ? 'Uploading...' : 'Add to Cart' }}
       </button>
     </div>
