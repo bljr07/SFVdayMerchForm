@@ -1,9 +1,10 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, inject } from 'vue'
 import { supabase } from '../supabase'
 
 const props = defineProps(['cart'])
 const emit = defineEmits(['clear-cart', 'update-quantity', 'remove-item', 'order-placed'])
+const showToast = inject('showToast')
 
 const isSubmitting = ref(false)
 const isUploading = ref(false) // State for the receipt upload
@@ -52,7 +53,7 @@ const uploadProof = async (event) => {
 
   // 1. Check File Type
   if (!file.type.startsWith('image/')) {
-    alert('Invalid file type. Please upload an image of your receipt.')
+    showToast('Invalid file type. Please upload an image of your receipt.', 'error')
     event.target.value = ''
     return
   }
@@ -60,7 +61,7 @@ const uploadProof = async (event) => {
   // 2. Check File Size (< 50MB)
   const maxSizeInBytes = 50 * 1024 * 1024
   if (file.size > maxSizeInBytes) {
-    alert('File is too large! Please upload an image smaller than 50MB.')
+    showToast('File is too large! Please upload an image smaller than 50MB.', 'error')
     event.target.value = ''
     return
   }
@@ -76,9 +77,10 @@ const uploadProof = async (event) => {
 
     const { data } = supabase.storage.from('order-uploads').getPublicUrl(fileName)
     customer.payment_proof = data.publicUrl
+    showToast('Receipt uploaded successfully!', 'success')
 
   } catch (error) {
-    alert('Error uploading proof: ' + error.message)
+    showToast('Error uploading proof: ' + error.message, 'error')
     event.target.value = ''
   } finally {
     isUploading.value = false
@@ -105,13 +107,13 @@ const formatKey = (key) => {
 
 // --- Submit Order ---
 const submitOrder = async () => {
-  if (props.cart.length === 0) return alert('Your cart is empty!')
+  if (props.cart.length === 0) return showToast('Your cart is empty!', 'error')
 
   // Validation checks
-  if (!customer.name || !customer.tele || !customer.email) return alert('Please fill in your contact details.')
-  if (!customer.instagram) return alert('Please enter your Instagram handle for the giveaway.')
-  if (!customer.payment_proof) return alert('Please upload the payment proof before submitting.')
-  if (!customer.pdpa_consent) return alert('Please acknowledge the PDPA clause.')
+  if (!customer.name || !customer.tele || !customer.email) return showToast('Please fill in your contact details.', 'error')
+  if (!customer.instagram) return showToast('Please enter your Instagram handle for the giveaway.', 'error')
+  if (!customer.payment_proof) return showToast('Please upload the payment proof before submitting.', 'error')
+  if (!customer.pdpa_consent) return showToast('Please acknowledge the PDPA clause.', 'error')
 
   isSubmitting.value = true
 
@@ -156,6 +158,7 @@ const submitOrder = async () => {
     }
     
     emit('order-placed', orderDetails)
+    showToast('Order placed successfully!', 'success')
 
     // Reset form
     Object.keys(customer).forEach(key => customer[key] = '')
@@ -165,7 +168,7 @@ const submitOrder = async () => {
 
   } catch (error) {
     console.error(error)
-    alert('Error placing order: ' + error.message)
+    showToast('Error placing order: ' + error.message, 'error')
   } finally {
     isSubmitting.value = false
   }

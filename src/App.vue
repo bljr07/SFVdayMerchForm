@@ -1,15 +1,37 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, reactive, provide } from 'vue'
 import { supabase } from './supabase'
 import ProductCard from './components/ProductCard.vue'
 import Checkout from './views/Checkout.vue'
 import OrderSuccess from './views/OrderSuccess.vue'
+import BottomToast from './components/BottomToast.vue'
 
 // State
 const products = ref([])
 const cart = ref([])
 const currentView = ref('shop') // 'shop', 'checkout', 'success'
 const lastOrder = ref(null)
+
+// Toast State
+const toast = reactive({
+  visible: false,
+  message: '',
+  type: 'info'
+})
+
+const showToast = (message, type = 'info') => {
+  toast.message = message
+  toast.type = type
+  toast.visible = true
+  
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    toast.visible = false
+  }, 3000)
+}
+
+// Provide showToast to all children
+provide('showToast', showToast)
 
 // Watch view changes and scroll to top
 watch(currentView, () => {
@@ -34,6 +56,7 @@ const services = computed(() => products.value.filter(p => p.category === 'Servi
 // --- CART FUNCTIONS ---
 const handleAddToCart = (item) => {
   cart.value.push(item)
+  showToast(`Added ${item.name} to cart!`, 'success')
 }
 
 const handleClearCart = () => {
@@ -158,6 +181,14 @@ const handleOrderPlaced = (order) => {
       @update-quantity="handleUpdateQuantity" @remove-item="handleRemoveItem" @order-placed="handleOrderPlaced" />
 
     <OrderSuccess v-else-if="currentView === 'success'" :order="lastOrder" @back-to-shop="currentView = 'shop'" />
+
+    <!-- Global Toast -->
+    <BottomToast 
+      :visible="toast.visible" 
+      :message="toast.message" 
+      :type="toast.type" 
+      @close="toast.visible = false" 
+    />
 
   </div>
 </template>

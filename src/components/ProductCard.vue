@@ -1,9 +1,11 @@
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, inject } from 'vue'
 import { supabase } from '../supabase'
 
 const props = defineProps(['product'])
 const emit = defineEmits(['add-to-cart'])
+const showToast = inject('showToast') // Inject the toast method
+
 const isUploading = ref(false)
 
 // --- DATA: BOUQUET OPTIONS ---
@@ -77,14 +79,14 @@ const uploadImage = async (event, fieldName) => {
   if (!file) return
 
   if (!file.type.startsWith('image/')) {
-    alert('Invalid file type. Please upload an image (JPG, PNG, etc).')
+    showToast('Invalid file type. Please upload an image (JPG, PNG, etc).', 'error')
     event.target.value = ''
     return
   }
 
   const maxSizeInBytes = 50 * 1024 * 1024
   if (file.size > maxSizeInBytes) {
-    alert('File is too large! Please upload an image smaller than 50MB.')
+    showToast('File is too large! Please upload an image smaller than 50MB.', 'error')
     event.target.value = ''
     return
   }
@@ -97,8 +99,9 @@ const uploadImage = async (event, fieldName) => {
     if (error) throw error
     const { data } = supabase.storage.from('order-uploads').getPublicUrl(fileName)
     form[fieldName] = data.publicUrl
+    showToast('Image uploaded successfully!', 'success')
   } catch (err) {
-    alert(err.message)
+    showToast(err.message, 'error')
     event.target.value = ''
   } finally {
     isUploading.value = false
@@ -142,7 +145,7 @@ const addToCart = () => {
 
   // === STOP IF INVALID ===
   if (errorMessage) {
-    alert(errorMessage)
+    showToast(errorMessage, 'error')
     return
   }
 
@@ -186,8 +189,6 @@ const addToCart = () => {
     quantity: form.quantity,
     options: finalOptions
   })
-
-  alert('Added to cart!')
 }
 </script>
 
