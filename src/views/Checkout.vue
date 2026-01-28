@@ -17,8 +17,30 @@ const customer = reactive({
   payment_proof: '' // <-- NEW: Stores the uploaded URL
 })
 
-const totalAmount = computed(() => {
+const subtotal = computed(() => {
   return props.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+})
+
+const discountAmount = computed(() => {
+  const sub = subtotal.value
+  if (sub < 15) return 0
+  
+  // First $15 spent = $2 discount
+  let discount = 2
+  
+  // Remaining amount after the first $15
+  const remaining = sub - 15
+  
+  // For every subsequent $10 spent, add $2 discount
+  if (remaining >= 10) {
+    discount += Math.floor(remaining / 10) * 2
+  }
+  
+  return discount
+})
+
+const finalTotal = computed(() => {
+  return Math.max(0, subtotal.value - discountAmount.value)
 })
 
 const uploadProof = async (event) => {
@@ -104,7 +126,7 @@ const submitOrder = async () => {
         customer_email: customer.email,
         customer_tele: customer.tele,
         instagram_handle: customer.instagram,
-        total_amount: totalAmount.value,
+        total_amount: finalTotal.value, 
         status: 'paid',
         special_note: customer.note,
         payment_proof_url: customer.payment_proof
@@ -177,9 +199,19 @@ const submitOrder = async () => {
               </div>
             </li>
           </ul>
-          <div class="card-footer d-flex justify-content-between fw-bold fs-5">
-            <span>Total to Pay:</span>
-            <span>${{ totalAmount }}</span>
+          <div class="card-footer d-flex flex-column gap-1 fw-bold fs-5">
+            <div class="d-flex justify-content-between text-secondary fs-6">
+              <span>Subtotal:</span>
+              <span>${{ subtotal }}</span>
+            </div>
+            <div v-if="discountAmount > 0" class="d-flex justify-content-between text-success fs-6">
+              <span>Discount:</span>
+              <span>-${{ discountAmount }}</span>
+            </div>
+            <div class="d-flex justify-content-between border-top pt-2 mt-1">
+              <span>Total to Pay:</span>
+              <span>${{ finalTotal }}</span>
+            </div>
           </div>
         </div>
       </div>
