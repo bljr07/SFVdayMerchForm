@@ -287,7 +287,7 @@ const submitOrder = async () => {
             </label>
           </div>
 
-          <button @click="submitOrder" class="btn bg-dark-pink w-100 btn-lg mt-3"
+          <button @click="submitOrder" class="btn bg-dark-pink w-100 btn-lg mt-3 fw-bold" style="color: black; border-color: black;"
             :disabled="isSubmitting || isUploading || cart.length === 0 || !customer.payment_proof || !customer.pdpa_consent">
             {{ isSubmitting ? 'Processing...' : 'Confirm Payment & Order' }}
           </button>
