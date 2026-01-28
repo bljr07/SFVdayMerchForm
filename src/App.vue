@@ -45,12 +45,13 @@ const handleRemoveItem = (index) => {
 </script>
 
 <template>
-  <nav class="navbar navbar-dark bg-dark mb-4 sticky-top">
-    <div class="container">
-      <span class="navbar-brand mb-0 h1">SOUNDFOUNDRY VDAY MERCH SALES</span>
-      <button class="btn btn-outline-light position-relative" @click="currentView = currentView === 'shop' ? 'checkout' : 'shop'">
-        {{ currentView === 'shop' ? 'Go to Checkout' : 'Back to Shop' }}
-        <span v-if="cart.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+  <nav class="navbar bg-white mb-2 sticky-top">
+    <div class="container d-flex justify-content-end">
+      <button class="btn btn-outline-light position-relative btn-dark"
+        @click="currentView = currentView === 'shop' ? 'checkout' : 'shop'">
+        {{ currentView === 'shop' ? 'Go to Cart' : 'Back to Shop' }}
+        <span v-if="cart.length > 0"
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
           {{ cart.length }}
         </span>
       </button>
@@ -60,19 +61,29 @@ const handleRemoveItem = (index) => {
   <div class="container py-4">
 
     <div v-if="currentView === 'shop'">
-      
+
       <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold">Valentine's Sales</h1>
-        <p class="lead text-muted">Pre-order your gifts and merchandise today.</p>
+        <h1 class="display-5 fw-bold">SMU SoundFoundry Merch Sales 💘</h1>
+        <p class="lead text-muted">
+          This form is for <b>Flowers</b>, <b>Keychains</b> or <b>Card Holders</b> orders only.<br />
+          If you’re interested in purchasing <b>Love Wrapped</b> do check out our other order form <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLScgwnDnszLwbunhWjT7mjcm7LDEXV9h7EjeKl1LzSqhL7SISQ/viewform?usp=preview">here</a>.<br />
+          Order submissions will close on <b>12 February, 11:59pm</b> 💕</p>
       </div>
 
       <!-- Navigation Menu -->
-      <div class="sticky-menu bg-body d-flex flex-nowrap overflow-auto gap-2 py-3 mb-4 justify-content-md-center px-2 hide-scrollbar border-bottom">
-        <a v-if="bouquets.length > 0" href="#bouquets" class="btn btn-outline-primary rounded-pill text-nowrap">💐 Bouquets</a>
-        <a v-if="flowers.length > 0" href="#flowers" class="btn btn-outline-danger rounded-pill text-nowrap">🌹 Single Flowers</a>
-        <a v-if="keychains.length > 0" href="#keychains" class="btn btn-outline-success rounded-pill text-nowrap">🎵 CD Key Chains</a>
-        <a v-if="cardHolders.length > 0" href="#cards" class="btn btn-outline-info rounded-pill text-nowrap">💳 Card Holders</a>
-        <a v-if="services.length > 0" href="#services" class="btn btn-outline-secondary rounded-pill text-nowrap">🎁 Services</a>
+      <div
+        class="sticky-menu bg-body d-flex flex-nowrap overflow-x-auto w-100 gap-2 py-3 mb-4 px-2 hide-scrollbar border-bottom">
+        <a v-if="bouquets.length > 0" href="#bouquets" class="btn btn-outline-primary rounded-pill text-nowrap">💐
+          Bouquets</a>
+        <a v-if="flowers.length > 0" href="#flowers" class="btn btn-outline-danger rounded-pill text-nowrap">🌹 Single
+          Flowers</a>
+        <a v-if="keychains.length > 0" href="#keychains" class="btn btn-outline-success rounded-pill text-nowrap">🎵 CD
+          Key Chains</a>
+        <a v-if="cardHolders.length > 0" href="#cards" class="btn btn-outline-info rounded-pill text-nowrap">💳 Card
+          Holders</a>
+        <a v-if="services.length > 0" href="#services" class="btn btn-outline-secondary rounded-pill text-nowrap">🎁
+          Services</a>
       </div>
 
       <section id="bouquets" v-if="bouquets.length > 0">
@@ -122,13 +133,8 @@ const handleRemoveItem = (index) => {
 
     </div>
 
-    <Checkout 
-      v-else 
-      :cart="cart" 
-      @clear-cart="handleClearCart" 
-      @update-quantity="handleUpdateQuantity" 
-      @remove-item="handleRemoveItem"
-    />
+    <Checkout v-else :cart="cart" @clear-cart="handleClearCart" @update-quantity="handleUpdateQuantity"
+      @remove-item="handleRemoveItem" />
 
   </div>
 </template>
@@ -139,4 +145,3 @@ html {
   scroll-behavior: smooth;
 }
 </style>
-
