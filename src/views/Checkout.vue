@@ -90,26 +90,26 @@ const submitOrder = async () => {
   isSubmitting.value = true
 
   try {
-    // 1. Create Order
-    const { data: orderData, error: orderError } = await supabase
+    // 1. Generate the ID manually in JavaScript
+    const newOrderId = crypto.randomUUID()
+
+    // 2. Insert Order (With the ID we just created)
+    const { error: orderError } = await supabase
       .from('orders')
       .insert({
+        id: newOrderId, // <--- Send the ID here
         customer_name: customer.name,
         customer_email: customer.email,
         customer_tele: customer.tele,
         total_amount: totalAmount.value,
-        status: 'paid', // Mark as paid since they uploaded proof
+        status: 'paid', 
         special_note: customer.note,
-        payment_proof_url: customer.payment_proof // <-- Save the proof URL
+        payment_proof_url: customer.payment_proof
       })
-      .select()
-      .single()
 
     if (orderError) throw orderError
 
-    const newOrderId = orderData.id
-
-    // 2. Create Order Items
+    // 3. Create Order Items (Using the same newOrderId)
     const orderItems = props.cart.map(item => ({
       order_id: newOrderId,
       product_id: item.id,
