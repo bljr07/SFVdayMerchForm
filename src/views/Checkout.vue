@@ -14,7 +14,8 @@ const customer = reactive({
   tele: '',
   instagram: '', // <--- 1. NEW FIELD
   note: '',
-  payment_proof: '' // <-- NEW: Stores the uploaded URL
+  payment_proof: '', // <-- NEW: Stores the uploaded URL
+  pdpa_consent: false // <--- PDPA Consent
 })
 
 const subtotal = computed(() => {
@@ -110,6 +111,7 @@ const submitOrder = async () => {
   if (!customer.name || !customer.tele || !customer.email) return alert('Please fill in your contact details.')
   if (!customer.instagram) return alert('Please enter your Instagram handle for the giveaway.')
   if (!customer.payment_proof) return alert('Please upload the payment proof before submitting.')
+  if (!customer.pdpa_consent) return alert('Please acknowledge the PDPA clause.')
 
   isSubmitting.value = true
 
@@ -267,8 +269,26 @@ const submitOrder = async () => {
             </div>
           </div>
 
+
+          <hr class="my-4">
+
+          <h5 class="mb-3">3. PDPA Acknowledgement</h5>
+          <div class="form-check mb-3">
+            <p>
+              By submitting this Form, you agree that Singapore Management University (SMU) as represented by SMU SoundFoundry may collect, use and disclose your personal data that you provide in this Form for the following purpose(s):<br /><br />
+              i) Administrative and safety matters regarding your participation in SMU SoundFoundry's Valentine's Day Merchandise Sales and Giveaway. If you are providing someone else’s personal data or submitting this Form on behalf of someone else, you hereby represent, warrant and declare that you have obtained consent from the named individual(s) in this Form, for the collection, use and disclosure of his or her personal data by you to SMU. <br /><br />
+              You also consent to the disclosure of the personal data provided by you in this Form, to SMU’s partners or affiliates and other third party service providers that SMU may engage from time to time. <br /><br />
+              If any of the personal data provided by you in this Form is disclosed to SMU’s partners or affiliates, and/or third party service providers, SMU will ensure that the disclosure is in accordance with the PDPA. <br /><br />
+              If you wish to find out more about SMU’s personal data protection policy, please view SMU’s Personal Data Protection Statement at http://www.smu.edu.sg/personal-data-protection. Should you wish at any time to withdraw your consent for the collection, use, and/or disclosure of your personal data after submitting this Form, please contact us at soundfoundry@sa.smu.edu.sg .
+            </p>
+            <input v-model="customer.pdpa_consent" class="form-check-input" type="checkbox" id="pdpaCheck">
+            <label class="form-check-label" for="pdpaCheck">
+              I consent to the above
+            </label>
+          </div>
+
           <button @click="submitOrder" class="btn btn-primary w-100 btn-lg mt-3"
-            :disabled="isSubmitting || isUploading || cart.length === 0 || !customer.payment_proof">
+            :disabled="isSubmitting || isUploading || cart.length === 0 || !customer.payment_proof || !customer.pdpa_consent">
             {{ isSubmitting ? 'Processing...' : 'Confirm Payment & Order' }}
           </button>
 
