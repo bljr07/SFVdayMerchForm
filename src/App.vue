@@ -76,7 +76,7 @@ const handleRemoveItem = (index) => {
 
       <!-- Navigation Menu -->
       <div
-        class="sticky-menu d-flex flex-nowrap overflow-x-auto w-100 gap-2 py-3 mb-4 px-2 hide-scrollbar border-bottom">
+        class="sticky-menu d-flex flex-nowrap overflow-x-auto w-100 gap-2 py-3 mb-4 px-2 hide-scrollbar border-bottom justify-content-md-center">
         <a v-if="bouquets.length > 0" href="#bouquets"
           class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">💐
           Bouquets</a>
