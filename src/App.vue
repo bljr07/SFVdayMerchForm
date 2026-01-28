@@ -45,7 +45,7 @@ const handleRemoveItem = (index) => {
 </script>
 
 <template>
-  <nav class="navbar bg-white mb-2 sticky-top">
+  <nav class="navbar mt-2 sticky-top">
     <div class="container d-flex justify-content-end">
       <button class="btn btn-outline-light position-relative btn-dark"
         @click="currentView = currentView === 'shop' ? 'checkout' : 'shop'">
@@ -73,21 +73,26 @@ const handleRemoveItem = (index) => {
 
       <!-- Navigation Menu -->
       <div
-        class="sticky-menu bg-body d-flex flex-nowrap overflow-x-auto w-100 gap-2 py-3 mb-4 px-2 hide-scrollbar border-bottom">
-        <a v-if="bouquets.length > 0" href="#bouquets" class="btn btn-outline-primary rounded-pill text-nowrap">💐
+        class="sticky-menu d-flex flex-nowrap overflow-x-auto w-100 gap-2 py-3 mb-4 px-2 hide-scrollbar border-bottom">
+        <a v-if="bouquets.length > 0" href="#bouquets"
+          class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">💐
           Bouquets</a>
-        <a v-if="flowers.length > 0" href="#flowers" class="btn btn-outline-danger rounded-pill text-nowrap">🌹 Single
+        <a v-if="flowers.length > 0" href="#flowers"
+          class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🌹 Single
           Flowers</a>
-        <a v-if="keychains.length > 0" href="#keychains" class="btn btn-outline-success rounded-pill text-nowrap">🎵 CD
+        <a v-if="keychains.length > 0" href="#keychains"
+          class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🎵 CD
           Key Chains</a>
-        <a v-if="cardHolders.length > 0" href="#cards" class="btn btn-outline-info rounded-pill text-nowrap">💳 Card
+        <a v-if="cardHolders.length > 0" href="#cards"
+          class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">💳 Card
           Holders</a>
-        <a v-if="services.length > 0" href="#services" class="btn btn-outline-secondary rounded-pill text-nowrap">🎁
+        <a v-if="services.length > 0" href="#services"
+          class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🎁
           Services</a>
       </div>
 
       <section id="bouquets" v-if="bouquets.length > 0">
-        <h3 class="mb-3 text-primary border-bottom pb-2">💐 Bouquets</h3>
+        <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">💐 Bouquets</h3>
         <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in bouquets" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
@@ -96,7 +101,7 @@ const handleRemoveItem = (index) => {
       </section>
 
       <section id="flowers" v-if="flowers.length > 0">
-        <h3 class="mb-3 text-danger border-bottom pb-2">🌹 Single Flowers</h3>
+        <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">🌹 Single Flowers</h3>
         <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in flowers" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
@@ -105,7 +110,7 @@ const handleRemoveItem = (index) => {
       </section>
 
       <section id="keychains" v-if="keychains.length > 0">
-        <h3 class="mb-3 text-success border-bottom pb-2">🎵 CD Key Chains</h3>
+        <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">🎵 CD Key Chains</h3>
         <div class="row justify-content-center">
           <div class="col-md-12 col-lg-6 mb-4" v-for="product in keychains" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
@@ -114,7 +119,7 @@ const handleRemoveItem = (index) => {
       </section>
 
       <section id="cards" v-if="cardHolders.length > 0">
-        <h3 class="mb-3 text-info border-bottom pb-2">💳 Card Holders</h3>
+        <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">💳 Card Holders</h3>
         <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in cardHolders" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
@@ -123,7 +128,7 @@ const handleRemoveItem = (index) => {
       </section>
 
       <section id="services" v-if="services.length > 0">
-        <h3 class="mb-3 text-secondary border-bottom pb-2">🎁 Services</h3>
+        <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">🎁 Services</h3>
         <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in services" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
