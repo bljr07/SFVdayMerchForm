@@ -199,7 +199,7 @@ const addToCart = () => {
         <h5 class="card-title fw-bold">{{ product.name }}</h5>
         <span class="badge bg-dark-pink text-dark rounded-pill">{{ priceDisplay }}</span>
       </div>
-      <p class="card-text text-muted small mb-3">{{ product.description }}</p>
+      <p class="card-text text-muted small mb-3 fst-italic">{{ product.description }}<br/>{{ product.category === 'Bouquets' ? 'Filler flowers included (Choice by team based on flower selection)' : '' }}</p>
 
       <div v-if="product.category === 'Bouquets'" class="bg-light p-3 rounded mb-3">
         <label class="form-label small fw-bold">1. Choose Flower Type</label>
