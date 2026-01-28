@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { supabase } from './supabase'
 import ProductCard from './components/ProductCard.vue'
 import Checkout from './views/Checkout.vue'
@@ -10,6 +10,11 @@ const products = ref([])
 const cart = ref([])
 const currentView = ref('shop') // 'shop', 'checkout', 'success'
 const lastOrder = ref(null)
+
+// Watch view changes and scroll to top
+watch(currentView, () => {
+  window.scrollTo(0, 0)
+})
 
 // Fetch Products
 onMounted(async () => {
