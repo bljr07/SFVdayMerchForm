@@ -193,6 +193,9 @@ const submitOrder = async () => {
                       <a :href="val" target="_blank" class="text-decoration-underline">View</a>
                     </span>
                     <span v-else-if="String(val).includes('Calla Lily')" class="fst-italic">{{ val }} (+$5)</span>
+                    <span v-else-if="k === 'filler_flowers' && val === 'Yes'" class="fst-italic">
+                      {{ val }} (+${{ item.name.includes('3') ? 5 : 8 }})
+                    </span>
                     <span v-else class="fst-italic">{{ val }}</span>
                   </div>
                 </div>

@@ -26,15 +26,34 @@ const bouquetSize = computed(() => {
 // --- COMPUTED: FINAL PRICE ---
 const finalPrice = computed(() => {
   let price = props.product.price
-  if (props.product.category === 'Bouquets' && form.flower_type === 'Calla Lily') {
-    price += 5
+  
+  if (props.product.category === 'Bouquets') {
+    if (form.flower_type === 'Calla Lily') {
+      price += 5
+    }
+    // New Feature: Filler Flowers
+    if (form.filler_flowers === 'Yes') {
+      if (bouquetSize.value === 3) price += 5
+      if (bouquetSize.value === 5) price += 8
+    }
   }
   return price
 })
 
 const priceDisplay = computed(() => {
-  if (props.product.category === 'Bouquets' && form.flower_type === 'Calla Lily') {
-    return `$${props.product.price} + $5`
+  let extras = []
+  
+  if (props.product.category === 'Bouquets') {
+    if (form.flower_type === 'Calla Lily') extras.push('+$5')
+    
+    if (form.filler_flowers === 'Yes') {
+      if (bouquetSize.value === 3) extras.push('+$5')
+      if (bouquetSize.value === 5) extras.push('+$8')
+    }
+  }
+  
+  if (extras.length > 0) {
+    return `$${props.product.price} ${extras.join(' ')}`
   }
   return `$${finalPrice.value}`
 })
@@ -52,7 +71,8 @@ const form = reactive({
   pic2_img: '',
   // Bouquet
   flower_type: '',
-  bouquet_colors: [], // <--- CHANGED: Array to store multiple colors
+  bouquet_colors: [],
+  filler_flowers: '',
   wrapping: '',
   // Card Holder
   variation: '',
@@ -116,6 +136,8 @@ const addToCart = () => {
   if (props.product.category === 'Bouquets') {
     if (!form.flower_type) {
       errorMessage = 'Please select a Flower Type.'
+    } else if (!form.filler_flowers) {
+        errorMessage = 'Please select Yes/No for Filler Flowers.'
     } else if (!form.wrapping) {
       errorMessage = 'Please select a Wrapping Paper.'
     } else {
@@ -166,7 +188,8 @@ const addToCart = () => {
     // Construct the bouquet options
     finalOptions = {
       flower_type: form.flower_type,
-      wrapping: form.wrapping
+      wrapping: form.wrapping,
+      filler_flowers: form.filler_flowers
     }
     // Add each flower color individually (flower_1, flower_2, etc.)
     form.bouquet_colors.forEach((color, index) => {
@@ -199,7 +222,11 @@ const addToCart = () => {
         <h5 class="card-title fw-bold">{{ product.name }}</h5>
         <span class="badge bg-dark-pink text-dark rounded-pill">{{ priceDisplay }}</span>
       </div>
-      <p class="card-text text-muted small mb-3 fst-italic">{{ product.description }}<br/>{{ product.category === 'Bouquets' ? 'Filler flowers included (Choice by team based on flower selection)' : '' }}</p>
+      <p class="card-text text-muted small mb-3 fst-italic">
+        {{ product.description }}<br/>
+        {{ product.category === 'Bouquets' ? 'Filler flowers will be choosen by team based on flower selection' : '' }}
+        {{ product.category === 'Services' ? 'Purchase to wrap flower stalks. Purchase multiple if you want each stalk to be wrapped individually.' : '' }}
+      </p>
 
       <div v-if="product.category === 'Bouquets'" class="bg-light p-3 rounded mb-3">
         <label class="form-label small fw-bold">1. Choose Flower Type</label>
@@ -226,7 +253,15 @@ const addToCart = () => {
           <small class="text-danger fst-italic">Please select a flower type to see color options.</small>
         </div>
 
-        <label class="form-label small fw-bold mt-2">3. Paper Style</label>
+        <label class="form-label small fw-bold mt-2">3. Filler Flowers?</label>
+        <select v-model="form.filler_flowers" class="form-select form-select-sm">
+          <option value="" disabled>Select Option...</option>
+          <option v-if="product.name.includes('3')" value="Yes">Yes (+$5)</option>
+          <option v-if="product.name.includes('5')" value="Yes">Yes (+$8)</option>
+          <option value="No">No</option>
+        </select>
+
+        <label class="form-label small fw-bold mt-2">4. Paper Style</label>
         <select v-model="form.wrapping" class="form-select form-select-sm">
           <option value="" disabled>Select Paper...</option>
           <option>Brown Paper</option>
