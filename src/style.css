@@ -85,10 +85,9 @@ button:focus-visible {
 section {
   scroll-margin-top: 80px;
   /* Adjust based on navbar height */
-  padding-bottom: 3rem;
-  border-bottom: 1px solid #eee;
+  padding-bottom: 4rem;
   /* Optional: Divider line */
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 /* Utility to hide scrollbar but keep functionality */
