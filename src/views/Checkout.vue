@@ -30,7 +30,7 @@ const uploadProof = async (event) => {
   // 1. Check File Type
   if (!file.type.startsWith('image/')) {
     alert('Invalid file type. Please upload an image of your receipt.')
-    event.target.value = '' 
+    event.target.value = ''
     return
   }
 
@@ -53,7 +53,7 @@ const uploadProof = async (event) => {
 
     const { data } = supabase.storage.from('order-uploads').getPublicUrl(fileName)
     customer.payment_proof = data.publicUrl
-    
+
   } catch (error) {
     alert('Error uploading proof: ' + error.message)
     event.target.value = ''
@@ -75,7 +75,7 @@ const formatKey = (key) => {
     'tele': 'Telegram/Phone'
   }
   if (overrides[key]) return overrides[key]
-  
+
   // Convert snake_case to Title Case (e.g. flower_type -> Flower Type)
   return key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
 }
@@ -83,7 +83,7 @@ const formatKey = (key) => {
 // --- Submit Order ---
 const submitOrder = async () => {
   if (props.cart.length === 0) return alert('Your cart is empty!')
-  
+
   // Validation checks
   if (!customer.name || !customer.tele || !customer.email) return alert('Please fill in your contact details.')
   if (!customer.instagram) return alert('Please enter your Instagram handle for the giveaway.')
@@ -105,7 +105,7 @@ const submitOrder = async () => {
         customer_tele: customer.tele,
         instagram_handle: customer.instagram,
         total_amount: totalAmount.value,
-        status: 'paid', 
+        status: 'paid',
         special_note: customer.note,
         payment_proof_url: customer.payment_proof
       })
@@ -125,7 +125,7 @@ const submitOrder = async () => {
 
     alert('Order placed successfully! Thank you for your payment.')
     emit('clear-cart')
-    
+
     // Reset form
     Object.keys(customer).forEach(key => customer[key] = '')
 
@@ -148,29 +148,33 @@ const submitOrder = async () => {
           <ul class="list-group list-group-flush">
             <li v-for="(item, index) in cart" :key="index" class="list-group-item">
               <div class="d-flex justify-content-between align-items-start">
-                 <div>
-                   <strong class="d-block mb-1">{{ item.name }}</strong>
-                   <div v-for="(val, k) in item.options" :key="k" class="text-muted small mb-1">
-                     <span class="fst-italic text-dark">{{ formatKey(k) }}: </span> 
-                     <span v-if="String(val).startsWith('http')" class="fst-italic">
-                        <a :href="val" target="_blank" class="text-decoration-underline">View</a>
-                     </span>
-                     <span v-else class="fst-italic">{{ val }}</span>
-                   </div>
-                 </div>
-                 <div class="d-flex flex-column align-items-end">
+                <div>
+                  <strong class="d-block mb-1">{{ item.name }}</strong>
+                  <div v-for="(val, k) in item.options" :key="k" class="text-muted small mb-1">
+                    <span class="fst-italic text-dark">{{ formatKey(k) }}: </span>
+                    <span v-if="String(val).startsWith('http')" class="fst-italic">
+                      <a :href="val" target="_blank" class="text-decoration-underline">View</a>
+                    </span>
+                    <span v-else-if="String(val).includes('Calla Lily')" class="fst-italic">{{ val }} (+$5)</span>
+                    <span v-else class="fst-italic">{{ val }}</span>
+                  </div>
+                </div>
+                <div class="d-flex flex-column align-items-end">
                   <span class="fw-bold fs-5 mb-2">${{ item.price * item.quantity }}</span>
 
                   <!-- Quantity Controls -->
                   <div class="d-flex align-items-center gap-2 bg-light rounded p-1 mb-2">
-                    <button class="btn btn-sm btn-white border px-2 py-0 fw-bold" @click="$emit('update-quantity', index, -1)" :disabled="item.quantity <= 1">−</button>
+                    <button class="btn btn-sm btn-white border px-2 py-0 fw-bold"
+                      @click="$emit('update-quantity', index, -1)" :disabled="item.quantity <= 1">−</button>
                     <span class="fw-bold px-1" style="min-width: 1.5ch; text-align: center">{{ item.quantity }}</span>
-                    <button class="btn btn-sm btn-white border px-2 py-0 fw-bold" @click="$emit('update-quantity', index, 1)">+</button>
+                    <button class="btn btn-sm btn-white border px-2 py-0 fw-bold"
+                      @click="$emit('update-quantity', index, 1)">+</button>
                   </div>
-                  
-                  <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" style="font-size: 0.85rem" @click="$emit('remove-item', index)">Remove</button>
-                 </div>
-               </div>
+
+                  <button class="btn btn-sm btn-link text-danger text-decoration-none p-0" style="font-size: 0.85rem"
+                    @click="$emit('remove-item', index)">Remove</button>
+                </div>
+              </div>
             </li>
           </ul>
           <div class="card-footer d-flex justify-content-between fw-bold fs-5">
@@ -183,7 +187,7 @@ const submitOrder = async () => {
       <div class="col-md-6">
         <div class="card p-4">
           <h5 class="mb-3">1. Contact Details</h5>
-          
+
           <div class="mb-3">
             <label class="form-label">Name</label>
             <input v-model="customer.name" type="text" class="form-control" placeholder="John Doe">
@@ -213,7 +217,7 @@ const submitOrder = async () => {
           <hr class="my-4">
 
           <h5 class="mb-3">2. Payment</h5>
-          
+
           <div class="text-center mb-3 p-3 bg-light rounded border">
             <p class="mb-2 fw-bold">Scan to Pay via PayNow</p>
             <img src="../../public/paynow.png" alt="PayNow QR" class="img-fluid mb-2" style="max-width: 200px;">
@@ -222,12 +226,7 @@ const submitOrder = async () => {
 
           <div class="mb-3">
             <label class="form-label fw-bold">Upload Payment Screenshot *</label>
-            <input 
-              type="file" 
-              class="form-control" 
-              @change="uploadProof" 
-              accept="image/*"
-            >
+            <input type="file" class="form-control" @change="uploadProof" accept="image/*">
             <div v-if="customer.payment_proof" class="mt-2 text-success small">
               ✅ Receipt uploaded successfully!
             </div>
@@ -236,14 +235,11 @@ const submitOrder = async () => {
             </div>
           </div>
 
-          <button 
-            @click="submitOrder" 
-            class="btn btn-primary w-100 btn-lg mt-3"
-            :disabled="isSubmitting || isUploading || cart.length === 0 || !customer.payment_proof"
-          >
+          <button @click="submitOrder" class="btn btn-primary w-100 btn-lg mt-3"
+            :disabled="isSubmitting || isUploading || cart.length === 0 || !customer.payment_proof">
             {{ isSubmitting ? 'Processing...' : 'Confirm Payment & Order' }}
           </button>
-          
+
         </div>
       </div>
     </div>

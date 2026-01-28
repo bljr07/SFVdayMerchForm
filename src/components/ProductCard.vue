@@ -9,7 +9,8 @@ const isUploading = ref(false)
 // --- DATA: BOUQUET OPTIONS ---
 const flowerOptions = {
   'Rose': ['White', 'Pink', 'Red'],
-  'Gerbera': ['White', 'Pink']
+  'Gerbera': ['White', 'Pink'],
+  'Calla Lily': ['Black', 'White']
 }
 
 // --- COMPUTED: DETECT BOUQUET SIZE ---
@@ -18,6 +19,22 @@ const bouquetSize = computed(() => {
   if (props.product.name.includes('3')) return 3
   if (props.product.name.includes('5')) return 5
   return 1 // Fallback
+})
+
+// --- COMPUTED: FINAL PRICE ---
+const finalPrice = computed(() => {
+  let price = props.product.price
+  if (props.product.category === 'Bouquets' && form.flower_type === 'Calla Lily') {
+    price += 5
+  }
+  return price
+})
+
+const priceDisplay = computed(() => {
+  if (props.product.category === 'Bouquets' && form.flower_type === 'Calla Lily') {
+    return `$${props.product.price} + $5`
+  }
+  return `$${finalPrice.value}`
 })
 
 // --- FORM STATE ---
@@ -165,7 +182,7 @@ const addToCart = () => {
   emit('add-to-cart', {
     id: props.product.id,
     name: props.product.name,
-    price: props.product.price,
+    price: finalPrice.value,
     quantity: form.quantity,
     options: finalOptions
   })
@@ -179,7 +196,7 @@ const addToCart = () => {
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-start mb-2">
         <h5 class="card-title fw-bold">{{ product.name }}</h5>
-        <span class="badge bg-dark-pink text-dark rounded-pill">${{ product.price }}</span>
+        <span class="badge bg-dark-pink text-dark rounded-pill">{{ priceDisplay }}</span>
       </div>
       <p class="card-text text-muted small mb-3">{{ product.description }}</p>
 
@@ -189,6 +206,7 @@ const addToCart = () => {
           <option value="" disabled>Select Type...</option>
           <option value="Rose">Rose</option>
           <option value="Gerbera">Gerbera</option>
+          <option value="Calla Lily">Calla Lily (+$5)</option>
         </select>
 
         <div v-if="form.flower_type">
