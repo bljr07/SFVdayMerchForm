@@ -3,7 +3,7 @@ import { ref, reactive, computed } from 'vue'
 import { supabase } from '../supabase'
 
 const props = defineProps(['cart'])
-const emit = defineEmits(['clear-cart', 'update-quantity', 'remove-item'])
+const emit = defineEmits(['clear-cart', 'update-quantity', 'remove-item', 'order-placed'])
 
 const isSubmitting = ref(false)
 const isUploading = ref(false) // State for the receipt upload
@@ -147,11 +147,21 @@ const submitOrder = async () => {
     const { error: itemsError } = await supabase.from('order_items').insert(orderItems)
     if (itemsError) throw itemsError
 
-    alert('Order placed successfully! Thank you for your payment.')
-    emit('clear-cart')
+    // Construct the order object to pass back
+    const orderDetails = {
+      id: newOrderId,
+      customer_name: customer.name,
+      total_amount: finalTotal.value, 
+      payment_proof_url: customer.payment_proof
+    }
+    
+    emit('order-placed', orderDetails)
 
     // Reset form
     Object.keys(customer).forEach(key => customer[key] = '')
+    
+    // Reset pdpa
+    customer.pdpa_consent = false
 
   } catch (error) {
     console.error(error)

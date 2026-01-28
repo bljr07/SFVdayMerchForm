@@ -3,11 +3,13 @@ import { ref, computed, onMounted } from 'vue'
 import { supabase } from './supabase'
 import ProductCard from './components/ProductCard.vue'
 import Checkout from './views/Checkout.vue'
+import OrderSuccess from './views/OrderSuccess.vue'
 
 // State
 const products = ref([])
 const cart = ref([])
-const currentView = ref('shop') // 'shop' or 'checkout'
+const currentView = ref('shop') // 'shop', 'checkout', 'success'
+const lastOrder = ref(null)
 
 // Fetch Products
 onMounted(async () => {
@@ -42,6 +44,12 @@ const handleUpdateQuantity = (index, change) => {
 const handleRemoveItem = (index) => {
   if (confirm('Remove this item?')) cart.value.splice(index, 1)
 }
+
+const handleOrderPlaced = (order) => {
+  lastOrder.value = order
+  cart.value = [] // Clear the cart
+  currentView.value = 'success'
+}
 </script>
 
 <template>
@@ -50,7 +58,7 @@ const handleRemoveItem = (index) => {
       <div class="fw-bold fs-1">
         SMU SoundFoundry
       </div>
-      <button class="btn btn-outline-dark position-relative bg-dark-pink text-dark fw-bold"
+      <button v-if="currentView !== 'success'" class="btn btn-outline-dark position-relative bg-dark-pink text-dark fw-bold"
         @click="currentView = currentView === 'shop' ? 'checkout' : 'shop'">
         {{ currentView === 'shop' ? 'Go to Cart' : 'Back to Shop' }}
         <span v-if="cart.length > 0"
@@ -141,8 +149,10 @@ const handleRemoveItem = (index) => {
 
     </div>
 
-    <Checkout v-else :cart="cart" @clear-cart="handleClearCart" @update-quantity="handleUpdateQuantity"
-      @remove-item="handleRemoveItem" />
+    <Checkout v-else-if="currentView === 'checkout'" :cart="cart" @clear-cart="handleClearCart"
+      @update-quantity="handleUpdateQuantity" @remove-item="handleRemoveItem" @order-placed="handleOrderPlaced" />
+
+    <OrderSuccess v-else-if="currentView === 'success'" :order="lastOrder" @back-to-shop="currentView = 'shop'" />
 
   </div>
 </template>
