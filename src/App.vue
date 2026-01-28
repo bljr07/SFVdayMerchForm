@@ -46,8 +46,11 @@ const handleRemoveItem = (index) => {
 
 <template>
   <nav class="navbar mt-2 sticky-top">
-    <div class="container d-flex justify-content-end">
-      <button class="btn btn-outline-light position-relative btn-dark"
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="fw-bold fs-1">
+        SMU SoundFoundry
+      </div>
+      <button class="btn btn-outline-dark position-relative bg-dark-pink text-dark fw-bold"
         @click="currentView = currentView === 'shop' ? 'checkout' : 'shop'">
         {{ currentView === 'shop' ? 'Go to Cart' : 'Back to Shop' }}
         <span v-if="cart.length > 0"
@@ -63,7 +66,7 @@ const handleRemoveItem = (index) => {
     <div v-if="currentView === 'shop'">
 
       <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold">SMU SoundFoundry Merch Sales 💘</h1>
+        <h1 class="display-5 fw-bold">Vday Merch Sales 💘</h1>
         <p class="lead text-muted">
           This form is for <b>Flowers</b>, <b>Keychains</b> or <b>Card Holders</b> orders only.<br />
           If you’re interested in purchasing <b>Love Wrapped</b> do check out our other order form <a
