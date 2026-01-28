@@ -113,15 +113,15 @@ const handleOrderPlaced = (order) => {
       <!-- Navigation Menu -->
       <div
         class="sticky-menu d-flex flex-nowrap overflow-x-auto w-100 gap-2 pb-3 pt-4 mb-4 px-2 hide-scrollbar border-bottom justify-content-md-center">
+        <a v-if="keychains.length > 0" href="#keychains"
+          class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🎵 CD
+          Key Chains</a>
         <a v-if="bouquets.length > 0" href="#bouquets"
           class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">💐
           Bouquets</a>
         <a v-if="flowers.length > 0" href="#flowers"
           class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🌹 Single
           Flowers</a>
-        <a v-if="keychains.length > 0" href="#keychains"
-          class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🎵 CD
-          Key Chains</a>
         <a v-if="cardHolders.length > 0" href="#cards"
           class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">💳 Card
           Holders</a>
@@ -129,6 +129,15 @@ const handleOrderPlaced = (order) => {
           class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🎁
           Services</a>
       </div>
+
+      <section id="keychains" v-if="keychains.length > 0">
+        <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">🎵 CD Key Chains</h3>
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-lg-6 mb-4" v-for="product in keychains" :key="product.id">
+            <ProductCard :product="product" @add-to-cart="handleAddToCart" />
+          </div>
+        </div>
+      </section>
 
       <section id="bouquets" v-if="bouquets.length > 0">
         <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">💐 Bouquets</h3>
@@ -143,15 +152,6 @@ const handleOrderPlaced = (order) => {
         <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">🌹 Single Flowers</h3>
         <div class="row justify-content-center">
           <div class="col-md-6 col-lg-4 mb-4" v-for="product in flowers" :key="product.id">
-            <ProductCard :product="product" @add-to-cart="handleAddToCart" />
-          </div>
-        </div>
-      </section>
-
-      <section id="keychains" v-if="keychains.length > 0">
-        <h3 class="mb-3 text-dark border-bottom pb-2 fw-bold">🎵 CD Key Chains</h3>
-        <div class="row justify-content-center">
-          <div class="col-md-12 col-lg-6 mb-4" v-for="product in keychains" :key="product.id">
             <ProductCard :product="product" @add-to-cart="handleAddToCart" />
           </div>
         </div>
