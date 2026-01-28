@@ -12,6 +12,7 @@ const customer = reactive({
   name: '',
   email: '',
   tele: '',
+  instagram: '', // <--- 1. NEW FIELD
   note: '',
   payment_proof: '' // <-- NEW: Stores the uploaded URL
 })
@@ -85,6 +86,7 @@ const submitOrder = async () => {
   
   // Validation checks
   if (!customer.name || !customer.tele || !customer.email) return alert('Please fill in your contact details.')
+  if (!customer.instagram) return alert('Please enter your Instagram handle for the giveaway.')
   if (!customer.payment_proof) return alert('Please upload the payment proof before submitting.')
 
   isSubmitting.value = true
@@ -101,6 +103,7 @@ const submitOrder = async () => {
         customer_name: customer.name,
         customer_email: customer.email,
         customer_tele: customer.tele,
+        instagram_handle: customer.instagram,
         total_amount: totalAmount.value,
         status: 'paid', 
         special_note: customer.note,
@@ -187,12 +190,21 @@ const submitOrder = async () => {
           </div>
           <div class="mb-3">
             <label class="form-label">Email</label>
-            <input v-model="customer.email" type="email" class="form-control" placeholder="john@school.edu">
+            <input v-model="customer.email" type="email" class="form-control" placeholder="john@computing.smu.edu.sg">
           </div>
           <div class="mb-3">
             <label class="form-label">Phone/Tele</label>
             <input v-model="customer.tele" type="text" class="form-control" placeholder="91234567">
           </div>
+
+          <div class="mb-3">
+            <label class="form-label">Instagram Handle (For Giveaway)</label>
+            <div class="input-group">
+              <span class="input-group-text">@</span>
+              <input v-model="customer.instagram" type="text" class="form-control" placeholder="username">
+            </div>
+          </div>
+
           <div class="mb-3">
             <label class="form-label">Special Note</label>
             <textarea v-model="customer.note" class="form-control" rows="2"></textarea>
