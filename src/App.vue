@@ -19,11 +19,22 @@ const toast = reactive({
   type: 'info'
 })
 
+// --- MODAL STATE ---
+const showMenuModal = ref(true)
+
+const closeMenuModal = () => {
+  showMenuModal.value = false
+}
+
+const openMenuModal = () => {
+  showMenuModal.value = true
+}
+
 const showToast = (message, type = 'info') => {
   toast.message = message
   toast.type = type
   toast.visible = true
-  
+
   // Auto-hide after 3 seconds
   setTimeout(() => {
     toast.visible = false
@@ -86,7 +97,8 @@ const handleOrderPlaced = (order) => {
       <div class="fw-bold fs-1">
         SMU SoundFoundry
       </div>
-      <button v-if="currentView !== 'success'" class="btn btn-outline-dark position-relative bg-dark-pink text-dark fw-bold"
+      <button v-if="currentView !== 'success'"
+        class="btn btn-outline-dark position-relative bg-dark-pink text-dark fw-bold"
         @click="currentView = currentView === 'shop' ? 'checkout' : 'shop'">
         {{ currentView === 'shop' ? 'Go to Cart' : 'Back to Shop' }}
         <span v-if="cart.length > 0"
@@ -104,7 +116,9 @@ const handleOrderPlaced = (order) => {
       <div class="text-center mb-5">
         <h1 class="display-5 fw-bold">Vday Merch Sales 💘</h1>
         <p class="lead text-muted">
-          This form is for <b>Flowers</b>, <b>Keychains</b> or <b>Card Holders</b> orders only.<br />
+          This form is for <b>Flowers</b>, <b>Keychains</b> or <b>Card Holders</b> orders only. (See our menu <a
+            href="#" @click.prevent="openMenuModal">
+            here</a>!)<br />
           If you’re interested in purchasing <b>Love Wrapped</b> do check out our other order form <a
             href="https://docs.google.com/forms/d/e/1FAIpQLScgwnDnszLwbunhWjT7mjcm7LDEXV9h7EjeKl1LzSqhL7SISQ/viewform?usp=preview">here</a>.<br />
           Order submissions will close on <b>12 February, 11:59pm</b> 💕</p>
@@ -183,12 +197,25 @@ const handleOrderPlaced = (order) => {
     <OrderSuccess v-else-if="currentView === 'success'" :order="lastOrder" @back-to-shop="currentView = 'shop'" />
 
     <!-- Global Toast -->
-    <BottomToast 
-      :visible="toast.visible" 
-      :message="toast.message" 
-      :type="toast.type" 
-      @close="toast.visible = false" 
-    />
+    <BottomToast :visible="toast.visible" :message="toast.message" :type="toast.type" @close="toast.visible = false" />
+
+    <!-- MERCH MENU MODAL -->
+    <div v-if="showMenuModal" class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5)"
+      @click.self="closeMenuModal">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content position-relative bg-transparent border-0">
+          <div class="modal-body p-0 text-center">
+            <div class="d-inline-block position-relative">
+              <button type="button"
+                class="btn-close position-absolute top-0 end-0 m-4 z-3 bg-white p-2 rounded-circle shadow"
+                @click="closeMenuModal"></button>
+              <img src="/Merch Menu.png" class="img-fluid rounded shadow-lg" style="max-height: 90vh; width: auto;"
+                alt="Merch Menu">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
