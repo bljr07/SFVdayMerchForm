@@ -26,7 +26,7 @@ const bouquetSize = computed(() => {
 // --- COMPUTED: FINAL PRICE ---
 const finalPrice = computed(() => {
   let price = props.product.price
-  
+
   if (props.product.category === 'Bouquets') {
     if (form.flower_type === 'Calla Lily') {
       price += 5
@@ -42,20 +42,58 @@ const finalPrice = computed(() => {
 
 const priceDisplay = computed(() => {
   let extras = []
-  
+
   if (props.product.category === 'Bouquets') {
     if (form.flower_type === 'Calla Lily') extras.push('+$5')
-    
+
     if (form.filler_flowers === 'Yes') {
       if (bouquetSize.value === 3) extras.push('+$5')
       if (bouquetSize.value === 5) extras.push('+$8')
     }
   }
-  
+
   if (extras.length > 0) {
     return `$${props.product.price} ${extras.join(' ')}`
   }
   return `$${finalPrice.value}`
+})
+
+// --- COMPUTED: CAROUSEL IMAGES ---
+const carouselImages = computed(() => {
+  const images = []
+
+  // 1. BOUQUETS: Show specific set image + all flower types
+  if (props.product.category === 'Bouquets') {
+    if (bouquetSize.value === 3) images.push('/Bouquet Set of 3.png')
+    if (bouquetSize.value === 5) images.push('/Bouquet Set of 5.png')
+
+    // Add logic to show individual flower types as valid options
+    images.push('/Bouquet Flowers.png')
+    images.push('/Bouquet Filler Flowers.png')
+  }
+
+  // 2. INDIVIDUAL FLOWERS
+  else if (props.product.category === 'Flowers') {
+    if (props.product.name.includes('Rose')) images.push('/Rose.png')
+    if (props.product.name.includes('Gerbera')) images.push('/Gerbera.png')
+    if (props.product.name.includes('Calla')) images.push('/Calla Lily.png')
+  }
+
+  // 3. OTHERS
+  else if (props.product.name === 'CD Key Chain') {
+    images.push('/CD Keychain Instructions.png') // TODO: Change placeholder
+  } else if (props.product.name === 'Card Holder') {
+    images.push('/Cardholder.png')
+  } else if (props.product.name === 'Wrapping Service') {
+    images.push('/Bouquet Set of 3.png') // TODO: Change placeholder
+  }
+
+  // Fallback if no image found (though strictly shouldn't happen with current data)
+  if (images.length === 0) {
+    // Optional: Add a placeholder or just leave empty
+  }
+
+  return images
 })
 
 // --- FORM STATE ---
@@ -137,7 +175,7 @@ const addToCart = () => {
     if (!form.flower_type) {
       errorMessage = 'Please select a Flower Type.'
     } else if (!form.filler_flowers) {
-        errorMessage = 'Please select Yes/No for Filler Flowers.'
+      errorMessage = 'Please select Yes/No for Filler Flowers.'
     } else if (!form.wrapping) {
       errorMessage = 'Please select a Wrapping Paper.'
     } else {
@@ -222,10 +260,34 @@ const addToCart = () => {
         <h5 class="card-title fw-bold">{{ product.name }}</h5>
         <span class="badge bg-dark-pink text-dark rounded-pill">{{ priceDisplay }}</span>
       </div>
+
+      <!-- CAROUSEL START -->
+      <div v-if="carouselImages.length > 0" :id="'carousel-' + product.id" class="carousel slide mb-3"
+        data-bs-ride="carousel">
+        <div class="carousel-inner rounded">
+          <div v-for="(img, index) in carouselImages" :key="index" :class="['carousel-item', { active: index === 0 }]">
+            <img :src="img" class="d-block w-100" style="aspect-ratio: 1414/2000; object-fit: contain;"
+              :alt="product.name">
+          </div>
+        </div>
+        <button v-if="carouselImages.length > 1" class="carousel-control-prev" type="button"
+          :data-bs-target="'#carousel-' + product.id" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button v-if="carouselImages.length > 1" class="carousel-control-next" type="button"
+          :data-bs-target="'#carousel-' + product.id" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <!-- CAROUSEL END -->
+
       <p class="card-text text-muted small mb-3 fst-italic">
-        {{ product.description }}<br/>
+        {{ product.description }}<br />
         {{ product.category === 'Bouquets' ? 'Filler flowers will be choosen by team based on flower selection' : '' }}
-        {{ product.category === 'Services' ? 'Purchase to wrap flower stalks. Purchase multiple if you want each stalk to be wrapped individually.' : '' }}
+        {{ product.category === 'Services' ? `Purchase to wrap flower stalks. Purchase multiple if you want each stalk
+        to be wrapped individually.` : '' }}
       </p>
 
       <div v-if="product.category === 'Bouquets'" class="bg-light p-3 rounded mb-3">
