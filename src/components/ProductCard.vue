@@ -70,6 +70,7 @@ const carouselImages = computed(() => {
     // Add logic to show individual flower types as valid options
     images.push('/Bouquet Flowers.png')
     images.push('/Bouquet Filler Flowers.png')
+    images.push('/Wrapping Paper.png')
   }
 
   // 2. INDIVIDUAL FLOWERS
@@ -85,7 +86,7 @@ const carouselImages = computed(() => {
   } else if (props.product.name === 'Card Holder') {
     images.push('/Cardholder.png')
   } else if (props.product.name === 'Wrapping Service') {
-    images.push('/Bouquet Set of 3.png') // TODO: Change placeholder
+    images.push('/Wrapping Paper.png')
   }
 
   // Fallback if no image found (though strictly shouldn't happen with current data)
