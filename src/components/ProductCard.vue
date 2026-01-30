@@ -29,7 +29,7 @@ const finalPrice = computed(() => {
 
   if (props.product.category === 'Bouquets') {
     if (form.flower_type === 'Calla Lily') {
-      price += 5
+      price += 5 * bouquetSize.value
     }
     // New Feature: Filler Flowers
     if (form.filler_flowers === 'Yes') {
@@ -40,15 +40,19 @@ const finalPrice = computed(() => {
   return price
 })
 
+// --- COMPUTED: PILL PRICE ---
 const priceDisplay = computed(() => {
   let extras = []
 
   if (props.product.category === 'Bouquets') {
-    if (form.flower_type === 'Calla Lily') extras.push('+$5')
+    if (form.flower_type === 'Calla Lily') {
+      if (bouquetSize.value === 3) extras.push('+ $15')
+      if (bouquetSize.value === 5) extras.push('+ $25')  
+    }
 
     if (form.filler_flowers === 'Yes') {
-      if (bouquetSize.value === 3) extras.push('+$5')
-      if (bouquetSize.value === 5) extras.push('+$8')
+      if (bouquetSize.value === 3) extras.push('+ $5')
+      if (bouquetSize.value === 5) extras.push('+ $8')
     }
   }
 
@@ -297,7 +301,7 @@ const addToCart = () => {
           <option value="" disabled>Select Type...</option>
           <option value="Rose">Rose</option>
           <option value="Gerbera">Gerbera</option>
-          <option value="Calla Lily">Calla Lily (+$5)</option>
+          <option value="Calla Lily">Calla Lily (+$5 per stalk)</option>
         </select>
 
         <div v-if="form.flower_type">
