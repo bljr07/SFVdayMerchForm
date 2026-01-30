@@ -131,8 +131,8 @@ const handleOrderPlaced = (order) => {
           If you’re interested in purchasing <b>Love Wrapped</b> do check out our other order form <a
             href="https://docs.google.com/forms/d/e/1FAIpQLScgwnDnszLwbunhWjT7mjcm7LDEXV9h7EjeKl1LzSqhL7SISQ/viewform?usp=preview"
             target="_blank" rel="noopener noreferrer">here</a>.<br />
-          Pre-Order submissions will close on <b>11 February, 12:00pm</b> 💕<br />
-          Collection on <b>12 February, 11:30am - 5:30pm</b> at SMU Connexion<br />
+          Pre-orders will close on <b>11 February, 12:00pm</b> 💕<br />
+          Collection on <b>12 February, 11:30am - 5:30pm</b> at <b>SMU Connexion</b><br />
           <i>Walk-in sales will be available at the same location and time, while stocks last!</i>
         </p>
       </div>
