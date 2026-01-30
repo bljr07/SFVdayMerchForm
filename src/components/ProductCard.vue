@@ -7,6 +7,15 @@ const emit = defineEmits(['add-to-cart'])
 const showToast = inject('showToast') // Inject the toast method
 
 const isUploading = ref(false)
+const showInstructionModal = ref(false)
+
+const openInstructionModal = () => {
+  showInstructionModal.value = true
+}
+
+const closeInstructionModal = () => {
+  showInstructionModal.value = false
+}
 
 // --- DATA: BOUQUET OPTIONS ---
 const flowerOptions = {
@@ -47,7 +56,7 @@ const priceDisplay = computed(() => {
   if (props.product.category === 'Bouquets') {
     if (form.flower_type === 'Calla Lily') {
       if (bouquetSize.value === 3) extras.push('+ $15')
-      if (bouquetSize.value === 5) extras.push('+ $25')  
+      if (bouquetSize.value === 5) extras.push('+ $25')
     }
 
     if (form.filler_flowers === 'Yes') {
@@ -288,12 +297,19 @@ const addToCart = () => {
       </div>
       <!-- CAROUSEL END -->
 
-      <p class="card-text text-muted small mb-3 fst-italic">
-        {{ product.description }}<br />
-        {{ product.category === 'Bouquets' ? 'Filler flowers will be choosen by team based on flower selection' : '' }}
-        {{ product.category === 'Services' ? `Purchase to wrap flower stalks. Purchase multiple if you want each stalk
-        to be wrapped individually.` : '' }}
-      </p>
+      <div class="container m-0 p-0 mb-3">
+        <p class="card-text text-muted small fst-italic">
+          <button v-if="product.name === 'CD Key Chain'" class="btn float-end ms-1 mb-1 p-1 pe-2 bg-transparent fw-bold"
+            @click="openInstructionModal" style="color: #DE4D56; border-color: #DE4D56;">
+            ❗Instructions
+          </button>
+          {{ product.description }}<br />
+          {{ product.category === 'Bouquets' ? 'Filler flowers will be choosen by team based on flower selection' : ''
+          }}
+          {{ product.category === 'Services' ? `Purchase to wrap flower stalks. Purchase multiple if you want each stalk
+          to be wrapped individually.` : '' }}
+        </p>
+      </div>
 
       <div v-if="product.category === 'Bouquets'" class="bg-light p-3 rounded mb-3">
         <label class="form-label small fw-bold">1. Choose Flower Type</label>
@@ -404,6 +420,24 @@ const addToCart = () => {
       <button class="btn bg-dark-pink border-dark w-100" @click="addToCart" :disabled="isUploading">
         {{ isUploading ? 'Uploading...' : 'Add to Cart' }}
       </button>
+    </div>
+  </div>
+
+  <!-- INSTRUCTION MODAL -->
+  <div v-if="showInstructionModal" class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5)"
+    @click="closeInstructionModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content position-relative bg-transparent border-0">
+        <div class="modal-body p-0 text-center">
+          <div class="d-inline-block position-relative" @click.stop>
+            <button type="button"
+              class="btn-close position-absolute top-0 end-0 m-4 z-3 bg-white p-2 rounded-circle shadow"
+              @click="closeInstructionModal"></button>
+            <img src="/CD Keychain Instructions.png" class="img-fluid rounded shadow-lg"
+              style="max-height: 90vh; width: auto;" alt="Instructions">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
