@@ -82,7 +82,7 @@ const carouselImages = computed(() => {
 
   // 3. OTHERS
   else if (props.product.name === 'CD Key Chain') {
-    images.push('/CD Keychain Instructions.png') // TODO: Change placeholder
+    images.push('/CD Keychain.png')
   } else if (props.product.name === 'Card Holder') {
     images.push('/Cardholder.png')
   } else if (props.product.name === 'Wrapping Service') {
