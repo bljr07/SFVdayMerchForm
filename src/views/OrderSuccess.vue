@@ -22,9 +22,14 @@ defineEmits(['back-to-shop'])
 
       <div class="small">
         Please take a screenshot of this page and save your Order ID for reference.<br /> <br />
-        Do drop by SoundFoundry’s Valentine’s Day event happening on 12 February 2026 at SMU Connexion (Open Air) from 11:30am – 5:30pm, featuring live music performances by our very own musicians!<br /> <br />
-        Looking for a Love Wrapped for your Valentine? Check out our other merchandise <a href="https://docs.google.com/forms/d/196FsazyfzTHtxuw9Z9PdiA-axlRvwapHp8AQY4Cgi4c/edit?ts=697205a9">here</a>.<br /> <br />
-        Do contact Jun Yong (@junyonglow) on telegram for any inquiries 😊
+        Do drop by SoundFoundry’s Valentine’s Day event happening on 12 February 2026 at SMU Connexion (Open Air) from
+        11:30am – 5:30pm, featuring live music performances by our very own musicians!<br /> <br />
+        Looking for a Love Wrapped for your Valentine? Check out our other merchandise <a
+          href="https://docs.google.com/forms/d/196FsazyfzTHtxuw9Z9PdiA-axlRvwapHp8AQY4Cgi4c/edit?ts=697205a9"
+          target="_blank" rel="noopener noreferrer">here</a>.<br />
+        <br />
+        Do contact Jun Yong (<a href="https://t.me/junyonglow" target="_blank"
+          rel="noopener noreferrer">@junyonglow</a>) on telegram for any inquiries 😊
       </div>
 
       <button @click="$emit('back-to-shop')" class="btn btn-outline-dark mt-3 bg-dark-pink text-dark fw-bold">

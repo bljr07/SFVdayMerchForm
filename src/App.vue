@@ -129,7 +129,8 @@ const handleOrderPlaced = (order) => {
             href="#" @click.prevent="openMenuModal">
             here</a>!)<br />
           If you’re interested in purchasing <b>Love Wrapped</b> do check out our other order form <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLScgwnDnszLwbunhWjT7mjcm7LDEXV9h7EjeKl1LzSqhL7SISQ/viewform?usp=preview">here</a>.<br />
+            href="https://docs.google.com/forms/d/e/1FAIpQLScgwnDnszLwbunhWjT7mjcm7LDEXV9h7EjeKl1LzSqhL7SISQ/viewform?usp=preview"
+            target="_blank" rel="noopener noreferrer">here</a>.<br />
           Order submissions will close on <b>12 February, 11:59pm</b> 💕</p>
       </div>
 
