@@ -6,8 +6,8 @@ defineEmits(['back-to-shop'])
 <template>
   <div class="container py-5 text-center">
     <div class="card p-5 border-0 shadow-sm mx-auto" style="max-width: 600px;">
-      <div class="mb-4 text-success display-1">
-        ✅
+      <div class="mb-4">
+        <img src="/Thank You.webp" class="img-fluid" style="max-height: 150px; width: auto;" alt="Thank You">
       </div>
       <h2 class="mb-3 fw-bold">Order Confirmed!</h2>
       <p class="text-muted mb-4">
