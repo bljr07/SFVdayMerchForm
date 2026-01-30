@@ -397,7 +397,6 @@ const addToCart = () => {
         <label class="form-label small fw-bold">1. Select Background Color</label>
         <select v-model="form.bg_color" class="form-select form-select-sm mb-2">
           <option value="" disabled>Select Color...</option>
-          <option value="White">White</option>
           <option value="Black">Black</option>
           <option value="Beige">Beige</option>
           <option value="Red">Red</option>
