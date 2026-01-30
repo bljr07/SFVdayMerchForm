@@ -133,7 +133,8 @@ const handleOrderPlaced = (order) => {
             target="_blank" rel="noopener noreferrer">here</a>.<br />
           Pre-orders will close on <b>11 February, 12:00pm</b> 💕<br />
           Collection on <b>12 February, 11:30am - 5:30pm</b> at <b>SMU Connexion</b><br />
-          <i>Walk-in sales will be available at the same location and time, while stocks last!</i>
+          <i>Walk-in sales will be available at the same location and time, while stocks last!</i><br />
+          <b>Each purchase of merch = 1 Entry to our giveaway!</b>
         </p>
       </div>
 
