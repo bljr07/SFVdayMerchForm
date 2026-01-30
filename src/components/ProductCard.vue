@@ -298,16 +298,18 @@ const addToCart = () => {
       <!-- CAROUSEL END -->
 
       <div class="container m-0 p-0 mb-3">
-        <p class="card-text text-muted small fst-italic">
-          <button v-if="product.name === 'CD Key Chain'" class="btn float-end ms-1 mb-1 p-1 pe-2 bg-transparent fw-bold"
-            @click="openInstructionModal" style="color: #DE4D56; border-color: #DE4D56;">
+        <p class="card-text text-muted small fst-italic d-flex align-items-center justify-content-between">
+          <span>
+            {{ product.description }}<br />
+            {{ product.category === 'Bouquets' ? 'Filler flowers will be choosen by team based on flower selection' :
+              '' }}
+            {{ product.category === 'Services' ? `Purchase to wrap flower stalks. Purchase multiple if you want each
+            stalk to be wrapped individually.` : '' }}
+          </span>
+          <button v-if="product.name === 'CD Key Chain'" class="btn ms-1 p-1 pe-2 bg-transparent fw-bold"
+            @click="openInstructionModal" style="color: #DE4D56; border-color: #DE4D56; white-space: nowrap;">
             ❗Instructions
           </button>
-          {{ product.description }}<br />
-          {{ product.category === 'Bouquets' ? 'Filler flowers will be choosen by team based on flower selection' : ''
-          }}
-          {{ product.category === 'Services' ? `Purchase to wrap flower stalks. Purchase multiple if you want each stalk
-          to be wrapped individually.` : '' }}
         </p>
       </div>
 
