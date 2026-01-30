@@ -107,6 +107,15 @@ const handleOrderPlaced = (order) => {
         </span>
       </button>
     </div>
+    <!-- ANNOUNCEMENT BAR -->
+    <div class=" bg-danger-subtle text-danger-emphasis overflow-hidden py-2" style="white-space: nowrap;">
+      <div class="scrolling-text d-inline-block fw-bold display-6" style="font-size: 1rem;">
+        <span>📢 BUY MORE SAVE MORE❗$2 off first $15 spent 😱 ADDITIONAL $2 off every subsequent $10 spent 🥳
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+        <span>📢 BUY MORE SAVE MORE❗$2 off first $15 spent 😱 ADDITIONAL $2 off every subsequent $10 spent 🥳
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+      </div>
+    </div>
   </nav>
 
   <div class="container py-4">
@@ -126,7 +135,7 @@ const handleOrderPlaced = (order) => {
 
       <!-- Navigation Menu -->
       <div
-        class="sticky-menu d-flex flex-nowrap overflow-x-auto w-100 gap-2 pb-3 pt-4 mb-4 px-2 hide-scrollbar border-bottom justify-content-md-center">
+        class="sticky-menu sticky-menu-bar d-flex flex-nowrap overflow-x-auto w-100 gap-2 pb-3 pt-4 mb-4 px-2 hide-scrollbar border-bottom justify-content-md-center">
         <a v-if="keychains.length > 0" href="#keychains"
           class="btn btn-outline-danger rounded-pill text-nowrap bg-dark-pink text-dark fw-medium">🎵 CD
           Key Chains</a>
@@ -224,5 +233,39 @@ const handleOrderPlaced = (order) => {
 /* Smooth scrolling for the whole page */
 html {
   scroll-behavior: smooth;
+}
+
+/* MARQUEE ANIMATION */
+.scrolling-text {
+  animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* STICKY MENU RESPONSIVE TOP */
+.sticky-menu-bar {
+  top: 85px;
+}
+
+/* Medium screens */
+@media (min-width: 768px) {
+  .sticky-menu-bar {
+    top: 90px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 992px) {
+  .sticky-menu-bar {
+    top: 100px;
+  }
 }
 </style>
