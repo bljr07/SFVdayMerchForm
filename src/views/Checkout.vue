@@ -26,18 +26,18 @@ const subtotal = computed(() => {
 const discountAmount = computed(() => {
   const sub = subtotal.value
   if (sub < 15) return 0
-  
+
   // First $15 spent = $2 discount
   let discount = 2
-  
+
   // Remaining amount after the first $15
   const remaining = sub - 15
-  
+
   // For every subsequent $10 spent, add $2 discount
   if (remaining >= 10) {
     discount += Math.floor(remaining / 10) * 2
   }
-  
+
   return discount
 })
 
@@ -130,7 +130,7 @@ const submitOrder = async () => {
         customer_email: customer.email,
         customer_tele: customer.tele,
         instagram_handle: customer.instagram,
-        total_amount: finalTotal.value, 
+        total_amount: finalTotal.value,
         status: 'paid',
         special_note: customer.note,
         payment_proof_url: customer.payment_proof
@@ -153,16 +153,16 @@ const submitOrder = async () => {
     const orderDetails = {
       id: newOrderId,
       customer_name: customer.name,
-      total_amount: finalTotal.value, 
+      total_amount: finalTotal.value,
       payment_proof_url: customer.payment_proof
     }
-    
+
     emit('order-placed', orderDetails)
     showToast('Order placed successfully!', 'success')
 
     // Reset form
     Object.keys(customer).forEach(key => customer[key] = '')
-    
+
     // Reset pdpa
     customer.pdpa_consent = false
 
@@ -192,7 +192,8 @@ const submitOrder = async () => {
                     <span v-if="String(val).startsWith('http')" class="fst-italic">
                       <a :href="val" target="_blank" class="text-decoration-underline">View</a>
                     </span>
-                    <span v-else-if="String(val).includes('Calla Lily')" class="fst-italic">{{ val }} (+$5 per stalk)</span>
+                    <span v-else-if="String(val).includes('Calla Lily')" class="fst-italic">{{ val }} (+$5 per
+                      stalk)</span>
                     <span v-else-if="k === 'filler_flowers' && val === 'Yes'" class="fst-italic">
                       {{ val }} (+${{ item.name.includes('3') ? 5 : 8 }})
                     </span>
@@ -248,7 +249,7 @@ const submitOrder = async () => {
           </div>
           <div class="mb-3">
             <label class="form-label">Phone/Tele</label>
-            <input v-model="customer.tele" type="text" class="form-control" placeholder="91234567">
+            <input v-model="customer.tele" type="text" class="form-control" placeholder="91234567 or @teleusername">
           </div>
 
           <div class="mb-3">
@@ -291,11 +292,25 @@ const submitOrder = async () => {
           <h5 class="mb-3">3. PDPA Acknowledgement</h5>
           <div class="form-check mb-3">
             <p>
-              By submitting this Form, you agree that Singapore Management University (SMU) as represented by SMU SoundFoundry may collect, use and disclose your personal data that you provide in this Form for the following purpose(s):<br /><br />
-              i) Administrative and safety matters regarding your participation in SMU SoundFoundry's Valentine's Day Merchandise Sales and Giveaway. If you are providing someone else’s personal data or submitting this Form on behalf of someone else, you hereby represent, warrant and declare that you have obtained consent from the named individual(s) in this Form, for the collection, use and disclosure of his or her personal data by you to SMU. <br /><br />
-              You also consent to the disclosure of the personal data provided by you in this Form, to SMU’s partners or affiliates and other third party service providers that SMU may engage from time to time. <br /><br />
-              If any of the personal data provided by you in this Form is disclosed to SMU’s partners or affiliates, and/or third party service providers, SMU will ensure that the disclosure is in accordance with the PDPA. <br /><br />
-              If you wish to find out more about SMU’s personal data protection policy, please view SMU’s Personal Data Protection Statement at <a href="http://www.smu.edu.sg/personal-data-protection" class="text-decoration-none fw-normal">http://www.smu.edu.sg/personal-data-protection</a>. Should you wish at any time to withdraw your consent for the collection, use, and/or disclosure of your personal data after submitting this Form, please contact us at <a href="mailto:soundfoundry@sa.smu.edu.sg" class="text-decoration-none fw-normal">soundfoundry@sa.smu.edu.sg</a>.
+              By submitting this Form, you agree that Singapore Management University (SMU) as represented by SMU
+              SoundFoundry may collect, use and disclose your personal data that you provide in this Form for the
+              following purpose(s):<br /><br />
+              i) Administrative and safety matters regarding your participation in SMU SoundFoundry's Valentine's Day
+              Merchandise Sales and Giveaway. If you are providing someone else’s personal data or submitting this Form
+              on behalf of someone else, you hereby represent, warrant and declare that you have obtained consent from
+              the named individual(s) in this Form, for the collection, use and disclosure of his or her personal data
+              by you to SMU. <br /><br />
+              You also consent to the disclosure of the personal data provided by you in this Form, to SMU’s partners or
+              affiliates and other third party service providers that SMU may engage from time to time. <br /><br />
+              If any of the personal data provided by you in this Form is disclosed to SMU’s partners or affiliates,
+              and/or third party service providers, SMU will ensure that the disclosure is in accordance with the PDPA.
+              <br /><br />
+              If you wish to find out more about SMU’s personal data protection policy, please view SMU’s Personal Data
+              Protection Statement at <a href="http://www.smu.edu.sg/personal-data-protection"
+                class="text-decoration-none fw-normal">http://www.smu.edu.sg/personal-data-protection</a>. Should you
+              wish at any time to withdraw your consent for the collection, use, and/or disclosure of your personal data
+              after submitting this Form, please contact us at <a href="mailto:soundfoundry@sa.smu.edu.sg"
+                class="text-decoration-none fw-normal">soundfoundry@sa.smu.edu.sg</a>.
             </p>
             <input v-model="customer.pdpa_consent" class="form-check-input" type="checkbox" id="pdpaCheck">
             <label class="form-check-label" for="pdpaCheck">
@@ -303,7 +318,8 @@ const submitOrder = async () => {
             </label>
           </div>
 
-          <button @click="submitOrder" class="btn bg-dark-pink w-100 btn-lg mt-3 fw-bold" style="color: black; border-color: black;"
+          <button @click="submitOrder" class="btn bg-dark-pink w-100 btn-lg mt-3 fw-bold"
+            style="color: black; border-color: black;"
             :disabled="isSubmitting || isUploading || cart.length === 0 || !customer.payment_proof || !customer.pdpa_consent">
             {{ isSubmitting ? 'Processing...' : 'Confirm Payment & Order' }}
           </button>
