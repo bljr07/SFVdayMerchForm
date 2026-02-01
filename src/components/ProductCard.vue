@@ -402,7 +402,7 @@ const addToCart = () => {
           <option value="Red">Red</option>
         </select>
 
-        <label class="form-label small fw-bold">2. Upload image (Front Cover)</label>
+        <label class="form-label small fw-bold">2. Upload image (Front Cover/ Album Cover)</label>
         <input type="file" class="form-control form-control-sm mb-2" @change="uploadImage($event, 'cover_img')"
           accept="image/*" />
         <label class="form-label small fw-bold">3. Upload image (Inside Keychain)</label>
