@@ -19,7 +19,7 @@ const closeInstructionModal = () => {
 
 // --- DATA: BOUQUET OPTIONS ---
 const flowerOptions = {
-  'Rose': ['White', 'Pink', 'Red'],
+  'Rose': ['Pink', 'Red'],
   'Gerbera': ['White', 'Pink'],
   'Calla Lily': ['Black', 'White']
 }
@@ -359,7 +359,6 @@ const addToCart = () => {
         <select v-model="form.single_flower_color" class="form-select form-select-sm">
           <option value="" disabled>Select Color...</option>
           <option v-if="product.name.includes('Rose')">Red</option>
-          <option v-if="product.name.includes('Rose')">White</option>
           <option v-if="product.name.includes('Rose')">Pink</option>
 
           <option v-if="product.name.includes('Gerbera')">White</option>
