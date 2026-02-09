@@ -21,7 +21,8 @@ const closeInstructionModal = () => {
 const flowerOptions = {
   'Rose': ['Pink', 'Red'],
   'Gerbera': ['White', 'Pink'],
-  'Calla Lily': ['Black', 'White']
+  // 'Calla Lily': ['Black', 'White'],
+  'Calla Lily': ['White']
 }
 
 // --- COMPUTED: DETECT BOUQUET SIZE ---
@@ -364,7 +365,7 @@ const addToCart = () => {
           <option v-if="product.name.includes('Gerbera')">White</option>
           <option v-if="product.name.includes('Gerbera')">Pink</option>
 
-          <option v-if="product.name.includes('Calla')">Black</option>
+          <!-- <option v-if="product.name.includes('Calla')">Black</option> -->
           <option v-if="product.name.includes('Calla')">White</option>
 
           <option v-if="product.name.includes('Baby')">White</option>
