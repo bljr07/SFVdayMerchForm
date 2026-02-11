@@ -272,7 +272,7 @@ const addToCart = () => {
   <div class="card h-100 shadow-sm border-0 w-100 overflow-hidden">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-start mb-2">
-        <h5 class="card-title fw-bold">{{ product.name }}</h5>
+        <h5 class="card-title fw-bold">{{ product.name }} {{ product.name === "CD Key Chain" ? '(Collection after 12 Feb)' : '' }}</h5>
         <span class="badge bg-dark-pink text-dark rounded-pill">{{ priceDisplay }}</span>
       </div>
 
